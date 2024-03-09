@@ -17,13 +17,18 @@ import {
 
 } from 'react-native/Libraries/NewAppScreen';
 import TabNavigator from './navigaton/Tab.navigator';
+import { PaperProvider } from 'react-native-paper';
 
 
 function App(): React.JSX.Element {
 
   return (
-    // <SafeAreaView style={backgroundStyle}>
+    <PaperProvider
+    >
       <TabNavigator></TabNavigator>
+    </PaperProvider>
+    // <SafeAreaView style={backgroundStyle}>
+
     // </SafeAreaView>
   );
 }
