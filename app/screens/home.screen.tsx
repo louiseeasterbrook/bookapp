@@ -19,9 +19,10 @@ export const HomeScreen = (): ReactNode => {
         label="Search book prompt..."
         value={input}
         mode="outlined"
-        onChangeText={text => setInput(text)}
+        onChangeText={(text: string) => setInput(text)}
       />
       <Button
+        icon="camera"
         style={styles.button}
         mode="outlined"
         onPress={() => setInput('')}>
