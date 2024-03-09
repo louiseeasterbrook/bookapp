@@ -19,9 +19,9 @@ export class BaseApi {
     this.config = config;
   }
 
-  public setup(apiName: string): void {
+  public setup(): void {
     this.apisauce = create({
-      baseURL: '' + apiName,
+      baseURL: 'https://openlibrary.org/search.json?q=the+lord+of+the+rings',
       timeout: this.config.timeout,
     });
 
