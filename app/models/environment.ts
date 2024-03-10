@@ -1,13 +1,22 @@
+import {SearchApi} from '../api/search-api';
+
 export class Environment {
   private static instance: Environment;
 
-  public bookApi: BookApi;
+  public searchApi: SearchApi;
 
   protected constructor() {
-    this.bookApi = new this.bookApi();
+    this.searchApi = new SearchApi();
   }
 
   public async setup(): Promise<void> {
-    await this.bookApi.setup('TODO');
+    await this.searchApi.setup('search.json?');
+  }
+
+  public static getInstance(): Environment {
+    if (!Environment.instance) {
+      Environment.instance = new Environment();
+    }
+    return Environment.instance;
   }
 }

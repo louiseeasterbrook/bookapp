@@ -5,31 +5,28 @@
  * @format
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {SafeAreaView, StyleSheet, useColorScheme} from 'react-native';
 
-import {
-  Colors,
-
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import TabNavigator from './navigaton/Tab.navigator';
-import { PaperProvider } from 'react-native-paper';
-
+import {PaperProvider} from 'react-native-paper';
+import {Environment} from './models/environment';
 
 function App(): React.JSX.Element {
+  const environment = Environment.getInstance();
+
+  //TODO: move to own setup function in diff file
+  useEffect(() => {
+    (async () => {
+      await environment.setup();
+    })();
+  }, []);
 
   return (
-    <PaperProvider
-    >
+    <PaperProvider>
       <TabNavigator></TabNavigator>
     </PaperProvider>
-    // <SafeAreaView style={backgroundStyle}>
-
-    // </SafeAreaView>
   );
 }
 

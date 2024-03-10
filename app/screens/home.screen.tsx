@@ -1,5 +1,5 @@
 import {ReactNode, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {
   Avatar,
   Button,
@@ -8,9 +8,26 @@ import {
   TextInput,
   Divider,
 } from 'react-native-paper';
+import {searchApiService} from '../models/api-service';
+import {SearchResult} from '../models/searchResults';
+import {SearchResultCard} from '../components/searchResultCard';
 
 export const HomeScreen = (): ReactNode => {
   const [input, setInput] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
+
+  const callApi = async () => {
+    if (!input) {
+      return;
+    }
+    setLoading(true);
+    const response = await searchApiService.getSearchResult(input);
+    if (response?.docs?.length > 0) {
+      setSearchResult(response.docs);
+    }
+    setLoading(false);
+  };
 
   return (
     <View style={styles.main}>
@@ -25,17 +42,22 @@ export const HomeScreen = (): ReactNode => {
         icon="camera"
         style={styles.button}
         mode="outlined"
-        onPress={() => setInput('')}>
+        onPress={callApi}>
         Search
       </Button>
       <Divider style={styles.divider} />
 
-      <Card>
-        <Card.Content>
-          <Text variant="titleLarge">Card title</Text>
-          <Text variant="bodyMedium">Card content</Text>
-        </Card.Content>
-      </Card>
+      {loading ? (
+        <ActivityIndicator animating={true} />
+      ) : searchResult.length > 0 ? (
+        <FlatList
+          ItemSeparatorComponent={() => <View style={{height: 10}} />}
+          data={searchResult}
+          renderItem={({item}) => <SearchResultCard searchResult={item} />}
+        />
+      ) : (
+        <Text>no result</Text>
+      )}
     </View>
   );
 };

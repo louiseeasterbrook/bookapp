@@ -19,36 +19,39 @@ export class BaseApi {
     this.config = config;
   }
 
-  public setup(): void {
+  public setup(apiName: string): void {
+    console.log('API GAME   ', apiName);
     this.apisauce = create({
-      baseURL: 'https://openlibrary.org/search.json?q=the+lord+of+the+rings',
+      baseURL: `https://openlibrary.org/${apiName}`,
       timeout: this.config.timeout,
     });
 
     this.apisauce.addMonitor(this.monitorApi);
   }
 
-  public setToken(token: string): void {
-    const bearerToken = `Bearer ${token}`;
-    this.apisauce.setHeaders({
-      Authorization: bearerToken,
-    });
-  }
+  // public setToken(token: string): void {
+  //   const bearerToken = `Bearer ${token}`;
+  //   this.apisauce.setHeaders({
+  //     Authorization: bearerToken,
+  //   });
+  // }
 
-  protected async get<T>(url: string): Promise<T> {
+  protected async getWithParams<T>(url: string, param: string): Promise<T> {
     try {
-      const response: ApiResponse<T> = await this.apisauce.get(url);
+      const response: ApiResponse<T> = await this.apisauce.get(url, {
+        q: param,
+      });
+      console.log('---------- ', response);
       if (response.ok) {
-        return response;
+        return response.data;
       }
-      return response;
     } catch (err) {}
   }
 
   private monitorApi(response: ApiResponse<any>): void {
     const {config, duration} = response;
-    if (this.config?.url) {
-      console.log('CALL API:');
-    }
+    // if (config?.url) {
+    console.log(` -- CALL API: ${config.baseURL}${config?.url}`);
+    // }
   }
 }
