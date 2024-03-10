@@ -1,18 +1,84 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import { HomeScreen } from "../screens/home.screen";
-import { Settings } from "react-native";
-import { SettingsScreen } from "../screens/settings.screen";
+import {NavigationContainer} from '@react-navigation/native';
+
+import {CommonActions} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {BottomNavigation} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {StyleSheet} from 'react-native';
+import {SettingsScreen} from '../screens/settings.screen';
+import {HomeScreen} from '../screens/home.screen';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} /> 
-        <Tab.Screen name="Settings" component={SettingsScreen} /> 
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        tabBar={({navigation, state, descriptors, insets}) => (
+          <BottomNavigation.Bar
+            navigationState={state}
+            safeAreaInsets={insets}
+            onTabPress={({route, preventDefault}) => {
+              const event = navigation.emit({
+                type: 'tabPress',
+                target: route.key,
+                canPreventDefault: true,
+              });
+
+              if (event.defaultPrevented) {
+                preventDefault();
+              } else {
+                navigation.dispatch({
+                  ...CommonActions.navigate(route.name, route.params),
+                  target: state.key,
+                });
+              }
+            }}
+            renderIcon={({route, focused, color}) => {
+              const {options} = descriptors[route.key];
+              if (options.tabBarIcon) {
+                return options.tabBarIcon({focused, color, size: 24});
+              }
+
+              return null;
+            }}
+            getLabelText={({route}) => {
+              return route.name;
+            }}
+          />
+        )}>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({color, size}) => {
+              return <Icon name="home" size={size} color={color} />;
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            tabBarLabel: 'Settings',
+            tabBarIcon: ({color, size}) => {
+              return <Icon name="cog" size={size} color={color} />;
+            },
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

@@ -1,16 +1,10 @@
 import {ReactNode, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {
-  Avatar,
-  Button,
-  Card,
-  Text,
-  TextInput,
-  Divider,
-} from 'react-native-paper';
+import {Button, Text, TextInput, Divider} from 'react-native-paper';
 import {searchApiService} from '../models/api-service';
 import {SearchResult} from '../models/searchResults';
 import {SearchResultCard} from '../components/searchResultCard';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export const HomeScreen = (): ReactNode => {
   const [input, setInput] = useState<string>();
@@ -30,35 +24,33 @@ export const HomeScreen = (): ReactNode => {
   };
 
   return (
-    <View style={styles.main}>
-      <TextInput
-        style={styles.searchBar}
-        label="Search book prompt..."
-        value={input}
-        mode="outlined"
-        onChangeText={(text: string) => setInput(text)}
-      />
-      <Button
-        icon="camera"
-        style={styles.button}
-        mode="outlined"
-        onPress={callApi}>
-        Search
-      </Button>
-      <Divider style={styles.divider} />
-
-      {loading ? (
-        <ActivityIndicator animating={true} />
-      ) : searchResult.length > 0 ? (
-        <FlatList
-          ItemSeparatorComponent={() => <View style={{height: 10}} />}
-          data={searchResult}
-          renderItem={({item}) => <SearchResultCard searchResult={item} />}
+    <SafeAreaView>
+      <View style={styles.main}>
+        <TextInput
+          style={styles.searchBar}
+          label="Search book prompt..."
+          value={input}
+          mode="outlined"
+          onChangeText={(text: string) => setInput(text)}
         />
-      ) : (
-        <Text>no result</Text>
-      )}
-    </View>
+        <Button style={styles.button} mode="outlined" onPress={callApi}>
+          Search
+        </Button>
+        <Divider style={styles.divider} />
+
+        {loading ? (
+          <ActivityIndicator animating={true} />
+        ) : searchResult.length > 0 ? (
+          <FlatList
+            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            data={searchResult}
+            renderItem={({item}) => <SearchResultCard searchResult={item} />}
+          />
+        ) : (
+          <Text>no result</Text>
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
