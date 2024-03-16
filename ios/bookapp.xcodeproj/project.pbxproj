@@ -14,7 +14,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-bookapp-bookappTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-bookapp-bookappTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		B76951692BA5670A005DF4D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B76951682BA56709005DF4D6 /* GoogleService-Info.plist */; };
+		B769516A2BA5670A005DF4D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B76951682BA56709005DF4D6 /* GoogleService-Info.plist */; };
 		B7CC28422B9D29C200B78D8E /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = B7CC28412B9D29C200B78D8E /* Fonts */; };
+		B7CC28452BA55DF100B78D8E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B7CC28442BA55DF100B78D8E /* FirebaseAnalytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-bookapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bookapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = bookapp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-bookapp-bookappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bookapp-bookappTests.release.xcconfig"; path = "Target Support Files/Pods-bookapp-bookappTests/Pods-bookapp-bookappTests.release.xcconfig"; sourceTree = "<group>"; };
+		B76951682BA56709005DF4D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B7CC28412B9D29C200B78D8E /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -61,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7CC28452BA55DF100B78D8E /* FirebaseAnalytics in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-bookapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +93,7 @@
 		13B07FAE1A68108700A75B9A /* bookapp */ = {
 			isa = PBXGroup;
 			children = (
+				B76951682BA56709005DF4D6 /* GoogleService-Info.plist */,
 				B7CC28412B9D29C200B78D8E /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -192,6 +198,9 @@
 			dependencies = (
 			);
 			name = bookapp;
+			packageProductDependencies = (
+				B7CC28442BA55DF100B78D8E /* FirebaseAnalytics */,
+			);
 			productName = bookapp;
 			productReference = 13B07F961A680F5B00A75B9A /* bookapp.app */;
 			productType = "com.apple.product-type.application";
@@ -222,6 +231,9 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
+			packageReferences = (
+				B7CC28432BA55DF100B78D8E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -237,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B769516A2BA5670A005DF4D6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7CC28422B9D29C200B78D8E /* Fonts in Resources */,
+				B76951692BA5670A005DF4D6 /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -483,6 +497,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.example.bookapp;
 				PRODUCT_NAME = bookapp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -509,6 +524,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.example.bookapp;
 				PRODUCT_NAME = bookapp;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -697,6 +713,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B7CC28432BA55DF100B78D8E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.22.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B7CC28442BA55DF100B78D8E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7CC28432BA55DF100B78D8E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }
