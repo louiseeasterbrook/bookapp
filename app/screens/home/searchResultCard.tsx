@@ -7,7 +7,7 @@ import {
   TextInput,
   Divider,
 } from 'react-native-paper';
-import {SearchResult} from '../models/searchResults';
+import {SearchResult} from '../../models/searchResults';
 
 type SearchResultCardProps = {
   searchResult: SearchResult;

@@ -12,6 +12,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import TabNavigator from './navigaton/Tab.navigator';
 import {PaperProvider} from 'react-native-paper';
 import {Environment} from './models/environment';
+import StackNavigator from './navigaton/SearchResult.navigator';
 
 function App(): React.JSX.Element {
   const environment = Environment.getInstance();
@@ -25,7 +26,7 @@ function App(): React.JSX.Element {
 
   return (
     <PaperProvider>
-      <TabNavigator></TabNavigator>
+      <StackNavigator></StackNavigator>
     </PaperProvider>
   );
 }

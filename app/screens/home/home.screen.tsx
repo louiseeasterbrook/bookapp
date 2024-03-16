@@ -1,12 +1,13 @@
 import {ReactNode, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Button, Text, TextInput, Divider} from 'react-native-paper';
-import {searchApiService} from '../models/api-service';
-import {SearchResult} from '../models/searchResults';
-import {SearchResultCard} from '../components/searchResultCard';
+import {searchApiService} from '../../models/api-service';
+import {SearchResult} from '../../models/searchResults';
+import {SearchResultCard} from './searchResultCard';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {BaseScreen} from '../../components/screenContainer.component';
 
-export const HomeScreen = (): ReactNode => {
+export const HomeScreen = ({navigation}): ReactNode => {
   const [input, setInput] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
@@ -23,8 +24,12 @@ export const HomeScreen = (): ReactNode => {
     setLoading(false);
   };
 
+  const navigateToBookScreen = () => {
+    navigation.navigate('ViewBook');
+  };
+
   return (
-    <SafeAreaView>
+    <BaseScreen>
       <View style={styles.main}>
         <TextInput
           style={styles.searchBar}
@@ -33,7 +38,10 @@ export const HomeScreen = (): ReactNode => {
           mode="outlined"
           onChangeText={(text: string) => setInput(text)}
         />
-        <Button style={styles.button} mode="outlined" onPress={callApi}>
+        <Button
+          style={styles.button}
+          mode="outlined"
+          onPress={navigateToBookScreen}>
           Search
         </Button>
         <Divider style={styles.divider} />
@@ -50,7 +58,7 @@ export const HomeScreen = (): ReactNode => {
           <Text>no result</Text>
         )}
       </View>
-    </SafeAreaView>
+    </BaseScreen>
   );
 };
 
