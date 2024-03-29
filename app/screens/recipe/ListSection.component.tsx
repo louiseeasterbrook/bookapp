@@ -4,8 +4,8 @@ import {Appbar, Text} from 'react-native-paper';
 import {NavigationProp} from '@react-navigation/native';
 import {ListWithTitle, Recipe} from '../../models/searchResults';
 import {FlatList} from 'react-native-gesture-handler';
-import {ListRow} from './LisrRow.component';
-import {List, MD3Colors} from 'react-native-paper';
+import {ListRow} from './ListRow.component';
+import {StyleSheet} from 'react-native';
 
 type ListSectionProps = {
   listTitleArray: ListWithTitle;
@@ -18,15 +18,24 @@ export const ListSection = ({
 }: ListSectionProps): ReactNode => {
   return (
     <>
-      <List.Section>
-        {listTitleArray?.Title && (
-          <List.Subheader>{listTitleArray.Title}</List.Subheader>
-        )}
-        {listTitleArray?.List?.length &&
-          listTitleArray.List.map((text: string, index: number) => (
-            <List.Item title={text} left={() => <List.Icon icon="folder" />} />
-          ))}
-      </List.Section>
+      {listTitleArray?.Title && (
+        <Text style={styles.title}>{listTitleArray.Title}</Text>
+      )}
+      {listTitleArray?.List?.length &&
+        listTitleArray.List.map((text: string, index: number) => (
+          <ListRow
+            key={index}
+            text={text}
+            orderedList={orderedList}
+            index={index}></ListRow>
+        ))}
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontWeight: '600',
+    paddingVertical: 8,
+  },
+});

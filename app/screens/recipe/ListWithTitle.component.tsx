@@ -1,10 +1,11 @@
 import {ReactNode, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Appbar, Text} from 'react-native-paper';
 import {NavigationProp} from '@react-navigation/native';
 import {ListWithTitle, Recipe} from '../../models/searchResults';
 import {FlatList} from 'react-native-gesture-handler';
 import {ListSection} from './ListSection.component';
+import {Avatar, Button, Card, Text, Appbar} from 'react-native-paper';
+import {StyleSheet} from 'react-native';
 
 type DisplayListWithTitleProps = {
   title: string;
@@ -19,12 +20,25 @@ export const DisplayListWithTitle = ({
 }: DisplayListWithTitleProps): ReactNode => {
   return (
     <>
-      <Text>{title}</Text>
-      {listArray.map(list => (
-        <ListSection
-          listTitleArray={list}
-          orderedList={orderedList}></ListSection>
-      ))}
+      <Card>
+        <Card.Content>
+          <Text style={styles.mainTitle}>{title}</Text>
+          {listArray.map((list: ListWithTitle, index: number) => (
+            <ListSection
+              key={index}
+              listTitleArray={list}
+              orderedList={orderedList}></ListSection>
+          ))}
+        </Card.Content>
+      </Card>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  mainTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    paddingBottom: 8,
+  },
+});

@@ -40,7 +40,9 @@ export const HomeScreen = ({navigation}): ReactNode => {
       .ref('categories')
       .once('value')
       .then(Response => {
-        setCategories(Response.val());
+        const res = Response.val();
+        const noNullRes = res.filter((x: string) => x !== null);
+        setCategories(noNullRes);
       });
   };
 
@@ -164,8 +166,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
 const styles = StyleSheet.create({
   main: {
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingHorizontal: 15,
   },
   button: {
     marginTop: 20,
