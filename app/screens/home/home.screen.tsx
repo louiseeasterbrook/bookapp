@@ -1,32 +1,44 @@
-import {ReactNode, useState} from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Button, Text, TextInput, Divider} from 'react-native-paper';
 import {searchApiService} from '../../models/api-service';
 import {SearchResult} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {BaseScreen} from '../../components/screenContainer.component';
+
+import database from '@react-native-firebase/database';
+import {firebase} from '@react-native-firebase/database';
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [input, setInput] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
+  const [searchResult, setSearchResult] = useState([]);
 
-  const callApi = async () => {
-    if (!input) {
-      return;
-    }
-    setLoading(true);
-    const response = await searchApiService.getSearchResult(input);
-    if (response?.docs?.length > 0) {
-      setSearchResult(response.docs);
-    }
-    setLoading(false);
-  };
+  const DBURL =
+    'https://recipes-18c3d-default-rtdb.asia-southeast1.firebasedatabase.app';
 
   const navigateToBookScreen = () => {
     navigation.navigate('ViewBook');
   };
+
+  const getRecipes = () => {
+    const reference = firebase.app().database(DBURL);
+
+    reference
+      .ref('recipes')
+      .once('value')
+      .then(snapshot => {
+        console.log('RECIPES: ', setSearchResult(snapshot.val()));
+      });
+  };
+
+  useEffect(() => {
+    getRecipes();
+  }, []);
+
+  useEffect(() => {
+    searchResult.forEach(x => console.log(x.Name));
+  }, [searchResult]);
 
   return (
     <BaseScreen>
@@ -38,10 +50,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
           mode="outlined"
           onChangeText={(text: string) => setInput(text)}
         />
-        <Button
-          style={styles.button}
-          mode="outlined"
-          onPress={navigateToBookScreen}>
+        <Button style={styles.button} mode="outlined" onPress={() => {}}>
           Search
         </Button>
         <Divider style={styles.divider} />

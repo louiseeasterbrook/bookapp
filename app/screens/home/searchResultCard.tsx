@@ -10,7 +10,7 @@ import {
 import {SearchResult} from '../../models/searchResults';
 
 type SearchResultCardProps = {
-  searchResult: SearchResult;
+  searchResult: any;
 };
 
 export const SearchResultCard = ({
@@ -19,8 +19,8 @@ export const SearchResultCard = ({
   return (
     <Card>
       <Card.Content>
-        <Text variant="titleLarge">{searchResult.title}</Text>
-        <Text variant="bodyMedium">{searchResult.author_name}</Text>
+        <Text>{searchResult.Name}</Text>
+        {/* <Text variant="bodyMedium">{searchResult.author_name}</Text> */}
       </Card.Content>
     </Card>
   );
