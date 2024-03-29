@@ -45,10 +45,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   useEffect(() => {
-    console.log(categories);
-  }, [categories]);
-
-  useEffect(() => {
     getRecipes();
     getCategories();
   }, []);
@@ -72,8 +68,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
       ? getRecipesThatMatchSelectedCategories()
       : recipeList;
 
-    console.log('NEW LSIT ', newList);
-
     setFilteredRecipeList(newList);
   }, [selectedCategories]);
 
@@ -84,7 +78,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   const navToRecipeScreen = (selectedRecipe: Recipe): void => {
-    console.log('TESt ', selectedRecipe);
     navigation.navigate('ViewRecipe', {
       recipe: selectedRecipe,
     });
