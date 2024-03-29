@@ -3,7 +3,7 @@ import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Button, Text, TextInput, Divider, Chip} from 'react-native-paper';
 import {Recipe} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
-import {BaseScreen} from '../../components/screenContainer.component';
+import {BaseScreen} from '../../components/BaseScreen.component';
 
 import {firebase} from '@react-native-firebase/database';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -123,6 +123,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
           <>
             <View style={styles.categoryContainer}>
               <FlatList
+                keyExtractor={(item, index) => index.toString()}
                 horizontal={true}
                 ItemSeparatorComponent={() => <View style={{height: 10}} />}
                 data={categories}
@@ -140,6 +141,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
             </View>
             {filteredRecipeList.length > 0 ? (
               <FlatList
+                keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={() => <View style={{height: 10}} />}
                 data={filteredRecipeList}
                 renderItem={({item}) => (

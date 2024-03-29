@@ -1,7 +1,7 @@
 import {ReactNode} from 'react';
 import {Button, Text, View} from 'react-native';
 import {ScreenContainer} from 'react-native-screens';
-import {BaseScreen} from '../components/screenContainer.component';
+import {BaseScreen} from '../components/BaseScreen.component';
 
 export const SettingsScreen = (): ReactNode => {
   return (

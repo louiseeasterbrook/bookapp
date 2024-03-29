@@ -20,7 +20,6 @@ export class BaseApi {
   }
 
   public setup(apiName: string): void {
-    console.log('API GAME   ', apiName);
     this.apisauce = create({
       baseURL: `https://openlibrary.org/${apiName}`,
       timeout: this.config.timeout,
@@ -41,7 +40,6 @@ export class BaseApi {
       const response: ApiResponse<T> = await this.apisauce.get(url, {
         q: param,
       });
-      console.log('---------- ', response);
       if (response.ok) {
         return response.data;
       }

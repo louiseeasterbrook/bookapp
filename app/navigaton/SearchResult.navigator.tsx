@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {ViewRecipeScreen} from '../screens/viewRecipe.screen';
+import {ViewRecipeScreen} from '../screens/recipe/viewRecipe.screen';
 import TabNavigator from './Tab.navigator';
 import {NavigationContainer} from '@react-navigation/native';
 

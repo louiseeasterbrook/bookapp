@@ -1,15 +1,11 @@
 export interface Recipe {
   Name: string;
   Category: number;
-  Ingredients: Ingredients[];
-  Method: Method[];
+  Ingredients: ListWithTitle[];
+  Method: ListWithTitle[];
 }
 
-export interface Ingredients {
-  SectionTitle: string;
-  List: string[];
-}
-export interface Method {
-  SectionTitle: string;
+export interface ListWithTitle {
+  Title: string;
   List: string[];
 }
