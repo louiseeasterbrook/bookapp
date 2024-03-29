@@ -4,20 +4,22 @@ import {Recipe} from '../../models/searchResults';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 type SearchResultCardProps = {
-  searchResult: Recipe;
+  recipe: Recipe;
+  category: string;
   onPress: (item: Recipe) => void;
 };
 
 export const SearchResultCard = ({
-  searchResult,
+  recipe,
+  category,
   onPress,
 }: SearchResultCardProps): ReactNode => {
   return (
-    <TouchableOpacity onPress={() => onPress(searchResult)}>
+    <TouchableOpacity onPress={() => onPress(recipe)}>
       <Card>
         <Card.Content>
-          <Text>{searchResult.Name}</Text>
-          <Text variant="bodyMedium">{searchResult.Category}</Text>
+          <Text>{recipe.Name}</Text>
+          <Text variant="bodyMedium">{category}</Text>
         </Card.Content>
       </Card>
     </TouchableOpacity>
