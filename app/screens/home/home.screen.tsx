@@ -6,7 +6,10 @@ import {SearchResultCard} from './searchResultCard';
 import {BaseScreen} from '../../components/BaseScreen.component';
 
 import {firebase} from '@react-native-firebase/database';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -109,15 +112,40 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
   return (
     <BaseScreen>
-      <View style={styles.main}>
-        <TextInput
-          style={styles.searchBar}
-          label="Search for a recipe..."
-          value={searchInput}
-          mode="outlined"
-          onChangeText={(text: string) => setSearchInput(text)}
-        />
-        <Divider style={styles.divider} />
+      <View>
+        <View style={styles.sidePadding}>
+          <TextInput
+            style={styles.searchBar}
+            label="Search for a recipe..."
+            value={searchInput}
+            mode="outlined"
+            onChangeText={(text: string) => setSearchInput(text)}
+          />
+          <TextInput
+            style={styles.searchBar}
+            label="Search for a recipe..."
+            value={searchInput}
+            mode="outlined"
+            onChangeText={(text: string) => setSearchInput(text)}
+          />
+
+          <TextInput
+            style={styles.searchBar}
+            label="Search for a recipe..."
+            value={searchInput}
+            mode="outlined"
+            onChangeText={(text: string) => setSearchInput(text)}
+          />
+          <TextInput
+            style={styles.searchBar}
+            label="Search for a recipe..."
+            value={searchInput}
+            mode="outlined"
+            onChangeText={(text: string) => setSearchInput(text)}
+          />
+
+          <Divider style={styles.divider} />
+        </View>
 
         {loading ? (
           <ActivityIndicator animating={true} />
@@ -127,12 +155,11 @@ export const HomeScreen = ({navigation}): ReactNode => {
               <FlatList
                 keyExtractor={(item, index) => index.toString()}
                 horizontal={true}
-                ItemSeparatorComponent={() => <View style={{height: 10}} />}
                 data={categories}
                 renderItem={({item}) => (
                   <TouchableOpacity onPress={() => categorySelect(item)}>
                     <Chip
-                      style={{marginRight: 8}}
+                      style={{marginLeft: 8, marginRight: 4}}
                       selected={isSelectedCategory(item)}
                       onPress={item => categorySelect(item)}>
                       {item}
@@ -141,22 +168,26 @@ export const HomeScreen = ({navigation}): ReactNode => {
                 )}
               />
             </View>
-            {filteredRecipeList.length > 0 ? (
-              <FlatList
-                keyExtractor={(item, index) => index.toString()}
-                ItemSeparatorComponent={() => <View style={{height: 10}} />}
-                data={filteredRecipeList}
-                renderItem={({item}) => (
-                  <SearchResultCard
-                    recipe={item}
-                    category={categories[item.Category]}
-                    onPress={item => navToRecipeScreen(item)}
-                  />
-                )}
-              />
-            ) : (
-              <Text>no result</Text>
-            )}
+            <View style={styles.sidePadding}>
+              {filteredRecipeList.length > 0 ? (
+                <FlatList
+                  // contentContainerStyle={{flexGrow: 1, paddingBottom: 5}}
+                  // style={{flex: 1}}
+                  keyExtractor={(item, index) => index.toString()}
+                  ItemSeparatorComponent={() => <View style={{height: 10}} />}
+                  data={filteredRecipeList}
+                  renderItem={({item}) => (
+                    <SearchResultCard
+                      recipe={item}
+                      category={categories[item.Category]}
+                      onPress={item => navToRecipeScreen(item)}
+                    />
+                  )}
+                />
+              ) : (
+                <Text>no result</Text>
+              )}
+            </View>
           </>
         )}
       </View>
@@ -165,8 +196,8 @@ export const HomeScreen = ({navigation}): ReactNode => {
 };
 
 const styles = StyleSheet.create({
-  main: {
-    paddingHorizontal: 15,
+  sidePadding: {
+    paddingHorizontal: 18,
   },
   button: {
     marginTop: 20,

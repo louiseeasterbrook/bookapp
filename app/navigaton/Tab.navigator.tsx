@@ -1,10 +1,7 @@
-import {NavigationContainer} from '@react-navigation/native';
-
 import {CommonActions} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigation} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {StyleSheet} from 'react-native';
 import {SettingsScreen} from '../screens/settings.screen';
 import {HomeScreen} from '../screens/home/home.screen';
 
@@ -12,7 +9,6 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   return (
-    // <NavigationContainer>
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -71,14 +67,5 @@ export default function TabNavigator() {
         }}
       />
     </Tab.Navigator>
-    // </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

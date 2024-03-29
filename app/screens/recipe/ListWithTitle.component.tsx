@@ -21,8 +21,9 @@ export const DisplayListWithTitle = ({
   return (
     <>
       <Card>
+        <Card.Title title={title}></Card.Title>
         <Card.Content>
-          <Text style={styles.mainTitle}>{title}</Text>
+          {/* <Text style={styles.mainTitle}>{title}</Text> */}
           {listArray.map((list: ListWithTitle, index: number) => (
             <ListSection
               key={index}

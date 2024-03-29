@@ -1,9 +1,6 @@
-import {ReactNode, useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Appbar, Text} from 'react-native-paper';
-import {NavigationProp} from '@react-navigation/native';
-import {ListWithTitle, Recipe} from '../../models/searchResults';
-import {FlatList} from 'react-native-gesture-handler';
+import {ReactNode} from 'react';
+import {Text} from 'react-native-paper';
+import {ListWithTitle} from '../../models/searchResults';
 import {ListRow} from './ListRow.component';
 import {StyleSheet} from 'react-native';
 
@@ -36,6 +33,6 @@ export const ListSection = ({
 const styles = StyleSheet.create({
   title: {
     fontWeight: '600',
-    paddingVertical: 8,
+    paddingBottom: 8,
   },
 });
