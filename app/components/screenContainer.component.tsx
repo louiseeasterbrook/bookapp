@@ -1,5 +1,5 @@
 import {ReactNode} from 'react';
-import {Button, SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar, Text, View} from 'react-native';
 
 type BaseScreenProps = {
   children: any;
@@ -9,13 +9,13 @@ type BaseScreenProps = {
 //TODO: status bar colour
 export const BaseScreen = ({
   children,
-  statusBarColour = '#00FFFF',
+  statusBarColour = '#FFFFFF',
 }: BaseScreenProps) => {
   return (
     <View>
-      <View style={{backgroundColor: '#00FFFF'}}>
+      <View>
         <StatusBar
-          backgroundColor="#00FFFF"
+          backgroundColor={statusBarColour}
           translucent
           barStyle="dark-content"></StatusBar>
       </View>

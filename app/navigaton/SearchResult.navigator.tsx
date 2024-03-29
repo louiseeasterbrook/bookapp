@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {ViewBookScreen} from '../screens/viewBook.screen';
+import {ViewRecipeScreen} from '../screens/viewRecipe.screen';
 import TabNavigator from './Tab.navigator';
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -15,8 +15,8 @@ export default function StackNavigator() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="ViewBook"
-          component={ViewBookScreen}
+          name="ViewRecipe"
+          component={ViewRecipeScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

@@ -1,34 +1,30 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Button, Text, TextInput, Divider} from 'react-native-paper';
-import {searchApiService} from '../../models/api-service';
-import {SearchResult} from '../../models/searchResults';
+import {Recipe} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {BaseScreen} from '../../components/screenContainer.component';
 
-import database from '@react-native-firebase/database';
 import {firebase} from '@react-native-firebase/database';
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [input, setInput] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchResult, setSearchResult] = useState<Recipe[]>([]);
 
   const DBURL =
     'https://recipes-18c3d-default-rtdb.asia-southeast1.firebasedatabase.app';
 
-  const navigateToBookScreen = () => {
-    navigation.navigate('ViewBook');
-  };
-
   const getRecipes = () => {
+    setLoading(true);
     const reference = firebase.app().database(DBURL);
 
     reference
       .ref('recipes')
       .once('value')
-      .then(snapshot => {
-        console.log('RECIPES: ', setSearchResult(snapshot.val()));
+      .then(Response => {
+        setSearchResult(Response.val());
+        setLoading(false);
       });
   };
 
@@ -36,9 +32,12 @@ export const HomeScreen = ({navigation}): ReactNode => {
     getRecipes();
   }, []);
 
-  useEffect(() => {
-    searchResult.forEach(x => console.log(x.Name));
-  }, [searchResult]);
+  const navToRecipeScreen = (selectedRecipe: Recipe) => {
+    console.log('TESt ', selectedRecipe);
+    navigation.navigate('ViewRecipe', {
+      recipe: selectedRecipe,
+    });
+  };
 
   return (
     <BaseScreen>
@@ -61,7 +60,12 @@ export const HomeScreen = ({navigation}): ReactNode => {
           <FlatList
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
             data={searchResult}
-            renderItem={({item}) => <SearchResultCard searchResult={item} />}
+            renderItem={({item}) => (
+              <SearchResultCard
+                searchResult={item}
+                onPress={item => navToRecipeScreen(item)}
+              />
+            )}
           />
         ) : (
           <Text>no result</Text>
