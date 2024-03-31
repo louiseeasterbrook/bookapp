@@ -53,9 +53,9 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   useEffect(() => {
-    console.log('see ', hello);
-    hello.setMainColor('blue ');
-    console.log('======== after', hello?.mainColor);
+    // console.log('see ', hello);
+    // hello.setMainColor('blue ');
+    // console.log('======== after', hello?.mainColor);
 
     getRecipes();
     getCategories();
@@ -145,8 +145,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
                   <TouchableOpacity onPress={() => categorySelect(item)}>
                     <Chip
                       style={{marginLeft: 8, marginRight: 4}}
-                      selected={isSelectedCategory(item)}
-                      onPress={item => categorySelect(item)}>
+                      selected={isSelectedCategory(item)}>
                       {item}
                     </Chip>
                   </TouchableOpacity>
@@ -156,10 +155,11 @@ export const HomeScreen = ({navigation}): ReactNode => {
             <View style={styles.contentPadding}>
               {filteredRecipeList.length > 0 ? (
                 <FlatList
-                  // contentContainerStyle={{flexGrow: 1, paddingBottom: 5}}
                   style={styles.flex}
                   keyExtractor={(item, index) => index.toString()}
-                  ItemSeparatorComponent={() => <View style={{height: 10}} />}
+                  ItemSeparatorComponent={() => (
+                    <View style={{marginBottom: 10}} />
+                  )}
                   data={filteredRecipeList}
                   renderItem={({item}) => (
                     <SearchResultCard
