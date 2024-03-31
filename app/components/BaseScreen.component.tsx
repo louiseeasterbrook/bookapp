@@ -1,5 +1,4 @@
-import {ReactNode} from 'react';
-import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
 
 type BaseScreenProps = {
   children: any;
@@ -12,14 +11,20 @@ export const BaseScreen = ({
   statusBarColour = '#FFFFFF',
 }: BaseScreenProps) => {
   return (
-    <View>
+    <View style={styles.screen}>
       <View>
         <StatusBar
           backgroundColor={statusBarColour}
           translucent
           barStyle="dark-content"></StatusBar>
       </View>
-      <SafeAreaView>{children}</SafeAreaView>
+      <SafeAreaView style={styles.screen}>{children}</SafeAreaView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+});

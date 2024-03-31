@@ -119,7 +119,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
   return (
     <BaseScreen>
-      <View>
+      <View style={styles.flex}>
         <View style={styles.sidePadding}>
           <TextInput
             style={styles.searchBar}
@@ -135,7 +135,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
         {loading ? (
           <ActivityIndicator animating={true} />
         ) : (
-          <>
+          <View style={styles.flex}>
             <View style={styles.categoryContainer}>
               <FlatList
                 keyExtractor={(item, index) => index.toString()}
@@ -153,11 +153,11 @@ export const HomeScreen = ({navigation}): ReactNode => {
                 )}
               />
             </View>
-            <View style={styles.sidePadding}>
+            <View style={styles.contentPadding}>
               {filteredRecipeList.length > 0 ? (
                 <FlatList
                   // contentContainerStyle={{flexGrow: 1, paddingBottom: 5}}
-                  // style={{flex: 1}}
+                  style={styles.flex}
                   keyExtractor={(item, index) => index.toString()}
                   ItemSeparatorComponent={() => <View style={{height: 10}} />}
                   data={filteredRecipeList}
@@ -173,7 +173,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
                 <Text>no result</Text>
               )}
             </View>
-          </>
+          </View>
         )}
       </View>
     </BaseScreen>
@@ -183,6 +183,13 @@ export const HomeScreen = ({navigation}): ReactNode => {
 const styles = StyleSheet.create({
   sidePadding: {
     paddingHorizontal: 18,
+  },
+  contentPadding: {
+    paddingHorizontal: 18,
+    flex: 1,
+  },
+  flex: {
+    flex: 1,
   },
   button: {
     marginTop: 20,
