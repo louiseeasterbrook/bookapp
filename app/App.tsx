@@ -9,7 +9,7 @@ import React, {useEffect} from 'react';
 
 import {PaperProvider} from 'react-native-paper';
 import {Environment} from './models/environment';
-import StackNavigator from './navigaton/SearchResult.navigator';
+import StackNavigator from './navigaton/stack.navigator';
 import {MainStore, RootStoreProvider} from './store/mainStore';
 
 function App(): React.JSX.Element {

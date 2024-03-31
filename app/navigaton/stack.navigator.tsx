@@ -2,6 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {ViewRecipeScreen} from '../screens/recipe/viewRecipe.screen';
 import TabNavigator from './Tab.navigator';
 import {NavigationContainer} from '@react-navigation/native';
+import LoginNavigator from './login.navigator';
 
 const Stack = createStackNavigator();
 
@@ -10,7 +11,12 @@ export default function StackNavigator() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="tabs"
+          name="Login"
+          component={LoginNavigator}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Tabs"
           component={TabNavigator}
           options={{headerShown: false}}
         />
