@@ -6,15 +6,14 @@
  */
 
 import React, {useEffect} from 'react';
-import {SafeAreaView, StyleSheet, useColorScheme} from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import TabNavigator from './navigaton/Tab.navigator';
 import {PaperProvider} from 'react-native-paper';
 import {Environment} from './models/environment';
 import StackNavigator from './navigaton/SearchResult.navigator';
+import {MainStore, RootStoreProvider} from './store/mainStore';
 
 function App(): React.JSX.Element {
+  const rootStore = MainStore.create({});
   const environment = Environment.getInstance();
 
   //TODO: move to own setup function in diff file
@@ -25,9 +24,11 @@ function App(): React.JSX.Element {
   }, []);
 
   return (
-    <PaperProvider>
-      <StackNavigator></StackNavigator>
-    </PaperProvider>
+    <RootStoreProvider value={rootStore}>
+      <PaperProvider>
+        <StackNavigator></StackNavigator>
+      </PaperProvider>
+    </RootStoreProvider>
   );
 }
 
