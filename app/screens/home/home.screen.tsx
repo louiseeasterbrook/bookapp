@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import {useStores} from '../../store/mainStore';
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -18,6 +19,8 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  const hello = useStores();
 
   const DBURL =
     'https://recipes-18c3d-default-rtdb.asia-southeast1.firebasedatabase.app';
@@ -50,6 +53,10 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   useEffect(() => {
+    console.log('see ', hello);
+    hello.setMainColor('blue ');
+    console.log('======== after', hello?.mainColor);
+
     getRecipes();
     getCategories();
   }, []);
@@ -114,28 +121,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
     <BaseScreen>
       <View>
         <View style={styles.sidePadding}>
-          <TextInput
-            style={styles.searchBar}
-            label="Search for a recipe..."
-            value={searchInput}
-            mode="outlined"
-            onChangeText={(text: string) => setSearchInput(text)}
-          />
-          <TextInput
-            style={styles.searchBar}
-            label="Search for a recipe..."
-            value={searchInput}
-            mode="outlined"
-            onChangeText={(text: string) => setSearchInput(text)}
-          />
-
-          <TextInput
-            style={styles.searchBar}
-            label="Search for a recipe..."
-            value={searchInput}
-            mode="outlined"
-            onChangeText={(text: string) => setSearchInput(text)}
-          />
           <TextInput
             style={styles.searchBar}
             label="Search for a recipe..."
