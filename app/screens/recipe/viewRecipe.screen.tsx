@@ -6,7 +6,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Avatar, Button, Card, Text, Appbar} from 'react-native-paper';
+import {Avatar, Button, Card, Text, Appbar, FAB} from 'react-native-paper';
 import {BaseScreen} from '../../components/BaseScreen.component';
 
 type ViewRecipeScreenProps = {
@@ -19,6 +19,7 @@ export const ViewRecipeScreen = ({
   route,
 }: ViewRecipeScreenProps) => {
   const {recipe} = route.params;
+  const hasRecipe = recipe?.Ingredients && recipe?.Method;
   const goBack = () => {
     navigation.goBack();
   };
@@ -29,17 +30,18 @@ export const ViewRecipeScreen = ({
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={goBack} />
-        <Appbar.Content title={recipe.Name} />
-        <Appbar.Action
-          icon={true ? 'heart-outline' : 'heart'}
-          onPress={() => console.log('love')}
-        />
-      </Appbar.Header>
       <BaseScreen>
+        <Appbar.Header>
+          <Appbar.BackAction onPress={goBack} />
+          <Appbar.Content title={recipe.Name} />
+          <Appbar.Action
+            icon={true ? 'heart-outline' : 'heart'}
+            onPress={() => console.log('love')}
+          />
+        </Appbar.Header>
+
         <ScrollView style={styles.main}>
-          {recipe?.Ingredients && recipe?.Method ? (
+          {hasRecipe ? (
             <>
               <View style={styles.cardContainer}>
                 <DisplayListWithTitle
@@ -63,6 +65,13 @@ export const ViewRecipeScreen = ({
           )}
         </ScrollView>
       </BaseScreen>
+      {hasRecipe && (
+        <FAB
+          icon="pencil"
+          style={styles.fab}
+          onPress={() => console.log('Pressed')}
+        />
+      )}
     </>
   );
 };
@@ -74,5 +83,11 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     paddingVertical: 10,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 4,
+    bottom: 20,
   },
 });

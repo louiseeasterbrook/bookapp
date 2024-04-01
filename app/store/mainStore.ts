@@ -6,11 +6,11 @@ import {types, Instance} from 'mobx-state-tree';
 export const MainStore = types
   .model('MainStore')
   .props({
-    mainColor: types.optional(types.string, 'green'),
+    name: types.optional(types.string, 'Louise Easterbrook'),
   })
   .actions(self => ({
-    setMainColor: (color: string) => {
-      self.mainColor = color;
+    setUserName: (name: string) => {
+      self.name = name;
     },
   }));
 

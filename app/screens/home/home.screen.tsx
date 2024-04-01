@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Button, Text, TextInput, Divider, Chip} from 'react-native-paper';
+import {Text, Searchbar} from 'react-native-paper';
 import {Recipe} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -121,22 +121,19 @@ export const HomeScreen = ({navigation}): ReactNode => {
     <BaseScreen>
       <View style={styles.flex}>
         <View style={styles.sidePadding}>
-          <TextInput
-            style={styles.searchBar}
-            label="Search for a recipe..."
+          <Searchbar
+            placeholder="Search"
+            onChangeText={setSearchInput}
             value={searchInput}
-            mode="outlined"
-            onChangeText={(text: string) => setSearchInput(text)}
+            style={styles.searchBar}
           />
-
-          <Divider style={styles.divider} />
         </View>
 
         {loading ? (
           <ActivityIndicator animating={true} />
         ) : (
           <View style={styles.flex}>
-            <View style={styles.categoryContainer}>
+            {/* <View style={styles.categoryContainer}>
               <FlatList
                 keyExtractor={(item, index) => index.toString()}
                 horizontal={true}
@@ -151,7 +148,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
                   </TouchableOpacity>
                 )}
               />
-            </View>
+            </View> */}
             <View style={styles.contentPadding}>
               {filteredRecipeList.length > 0 ? (
                 <FlatList
@@ -195,11 +192,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  divider: {
-    marginBottom: 20,
-  },
   searchBar: {
-    marginTop: 20,
+    marginVertical: 20,
   },
   categoryContainer: {
     paddingBottom: 20,
