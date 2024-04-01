@@ -4,6 +4,8 @@ import {Button, Text, TextInput, Divider, Chip} from 'react-native-paper';
 import {Recipe} from '../../models/searchResults';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {useStores} from '../../store/mainStore';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 
 export const LoginScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,11 +21,40 @@ export const LoginScreen = ({navigation}): ReactNode => {
     navigation.navigate('Tabs');
   };
 
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '774287886591-7cepgseri2rbmo58dpm7t4lqf9ffg62c.apps.googleusercontent.com',
+    });
+  }, []);
+
+  async function onGoogleButtonPress() {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+    // Get the users ID token
+    const {idToken} = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(googleCredential);
+  }
+
   return (
     <BaseScreen>
       <Text>{'welcome'}</Text>
       <Button icon="camera" mode="contained" onPress={navToTabs}>
         To Tabs
+      </Button>
+      <Button
+        mode="contained"
+        onPress={() =>
+          onGoogleButtonPress().then(() =>
+            console.log('Signed in with Google!'),
+          )
+        }>
+        Google Sign-In
       </Button>
     </BaseScreen>
   );

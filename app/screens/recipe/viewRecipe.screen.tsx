@@ -7,6 +7,7 @@ import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Avatar, Button, Card, Text, Appbar} from 'react-native-paper';
+import {BaseScreen} from '../../components/BaseScreen.component';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -36,30 +37,32 @@ export const ViewRecipeScreen = ({
           onPress={() => console.log('love')}
         />
       </Appbar.Header>
-      <ScrollView style={styles.main}>
-        {recipe?.Ingredients && recipe?.Method ? (
-          <>
-            <View style={styles.cardContainer}>
-              <DisplayListWithTitle
-                title="Ingredients"
-                orderedList={false}
-                listArray={recipe.Ingredients}></DisplayListWithTitle>
-            </View>
+      <BaseScreen>
+        <ScrollView style={styles.main}>
+          {recipe?.Ingredients && recipe?.Method ? (
+            <>
+              <View style={styles.cardContainer}>
+                <DisplayListWithTitle
+                  title="Ingredients"
+                  orderedList={false}
+                  listArray={recipe.Ingredients}></DisplayListWithTitle>
+              </View>
 
-            <View style={styles.cardContainer}>
-              <DisplayListWithTitle
-                title="Method"
-                orderedList={true}
-                listArray={recipe.Method}></DisplayListWithTitle>
-            </View>
-          </>
-        ) : (
-          <>
-            <Icon name="home" size={20} color={'black'} />
-            <Text>Recipe coming soon</Text>
-          </>
-        )}
-      </ScrollView>
+              <View style={styles.cardContainer}>
+                <DisplayListWithTitle
+                  title="Method"
+                  orderedList={true}
+                  listArray={recipe.Method}></DisplayListWithTitle>
+              </View>
+            </>
+          ) : (
+            <>
+              <Icon name="home" size={20} color={'black'} />
+              <Text>Recipe coming soon</Text>
+            </>
+          )}
+        </ScrollView>
+      </BaseScreen>
     </>
   );
 };
