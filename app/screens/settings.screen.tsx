@@ -1,20 +1,19 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {ScreenContainer} from 'react-native-screens';
 import {BaseScreen} from '../components/BaseScreen.component';
 import {
   Button,
   Text,
   TextInput,
   Divider,
-  Chip,
   List,
   Switch,
   Avatar,
   Icon,
+  IconButton,
 } from 'react-native-paper';
 import {useStores} from '../store/mainStore';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import auth from '@react-native-firebase/auth';
 
 const ToggleButton = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
@@ -22,12 +21,14 @@ const ToggleButton = () => {
   return <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />;
 };
 
-const logout = () => {
-  console.log('logout');
-};
-
 export const SettingsScreen = (): ReactNode => {
   const userStore = useStores();
+
+  const logout = () => {
+    auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+  };
 
   return (
     <BaseScreen>
@@ -38,9 +39,7 @@ export const SettingsScreen = (): ReactNode => {
               <Avatar.Icon size={44} icon="account" />
               <Text style={styles.name}>{userStore.name}</Text>
             </View>
-            <TouchableOpacity onPress={logout}>
-              <Icon source="logout" size={20} />
-            </TouchableOpacity>
+            <IconButton icon="logout" size={20} onPress={logout} />
           </View>
           <Divider />
 

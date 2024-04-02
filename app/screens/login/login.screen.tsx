@@ -43,8 +43,10 @@ export const LoginScreen = ({navigation}): ReactNode => {
 
   return (
     <BaseScreen>
-      <Text>{'welcome'}</Text>
-      <Button icon="camera" mode="contained" onPress={navToTabs}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>What for din</Text>
+      </View>
+      <Button mode="contained" onPress={navToTabs} style={{marginBottom: 20}}>
         To Tabs
       </Button>
       <Button
@@ -60,4 +62,15 @@ export const LoginScreen = ({navigation}): ReactNode => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  titleContainer: {
+    height: '40%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 30,
+    textAlign: 'center',
+  },
+});
