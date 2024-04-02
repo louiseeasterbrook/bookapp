@@ -46,17 +46,8 @@ export const LoginScreen = ({navigation}): ReactNode => {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>What for din</Text>
       </View>
-      <Button mode="contained" onPress={navToTabs} style={{marginBottom: 20}}>
-        To Tabs
-      </Button>
-      <Button
-        mode="contained"
-        onPress={() =>
-          onGoogleButtonPress().then(() =>
-            console.log('Signed in with Google!'),
-          )
-        }>
-        Google Sign-In
+      <Button mode="contained" onPress={onGoogleButtonPress}>
+        Google Sign In
       </Button>
     </BaseScreen>
   );
