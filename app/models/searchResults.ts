@@ -9,3 +9,8 @@ export interface ListWithTitle {
   Title: string;
   List: string[];
 }
+
+export interface RecipeUser {
+  DateCreated: string;
+  Favourites: number[];
+}

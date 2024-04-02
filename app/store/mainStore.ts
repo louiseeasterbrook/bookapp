@@ -1,16 +1,24 @@
 import {createContext, useContext} from 'react';
 import {types, Instance} from 'mobx-state-tree';
+import {cast} from 'mobx-state-tree';
 
 //STORE
 
 export const MainStore = types
   .model('MainStore')
   .props({
-    name: types.optional(types.string, 'Louise Easterbrook'),
+    name: types.optional(types.string, 'yello mello'),
+    uid: types.optional(types.string, ''),
+    favourites: types.array(types.number),
   })
+
   .actions(self => ({
-    setUserName: (name: string) => {
+    setUserInfo: (name: string, uid: string) => {
       self.name = name;
+      self.uid = uid;
+    },
+    setFavourites: (fav: number[]) => {
+      self.favourites = cast(fav);
     },
   }));
 

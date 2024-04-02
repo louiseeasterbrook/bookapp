@@ -7,36 +7,62 @@ import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Avatar, Button, Card, Text, Appbar, FAB} from 'react-native-paper';
-import {BaseScreen} from '../../components/BaseScreen.component';
+import {useStores} from '../../store/mainStore';
+import {firebase} from '@react-native-firebase/database';
+
+import {observer} from 'mobx-react-lite';
+
+const DBURL =
+  'https://recipes-18c3d-default-rtdb.asia-southeast1.firebasedatabase.app';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
   route: Recipe;
 };
 
-export const ViewRecipeScreen = ({
-  navigation,
-  route,
-}: ViewRecipeScreenProps) => {
-  const {recipe} = route.params;
-  const hasRecipe = recipe?.Ingredients && recipe?.Method;
-  const goBack = () => {
-    navigation.goBack();
-  };
+export const ViewRecipeScreen = observer(
+  ({navigation, route}: ViewRecipeScreenProps) => {
+    const userStore = useStores();
+    const {recipe} = route.params;
+    const hasRecipe = recipe?.Ingredients && recipe?.Method;
+    const isFav = userStore.favourites.includes(recipe.Id);
 
-  useEffect(() => {
-    console.log('---- ', recipe);
-  }, []);
+    const goBack = () => {
+      navigation.goBack();
+    };
 
-  return (
-    <>
-      <BaseScreen>
+    const favToggle = (): void => {
+      const newFavList = isFav ? removeFav() : addFav();
+      updateFav(newFavList);
+    };
+
+    const addFav = (): number[] => {
+      return [...userStore.favourites, recipe.Id];
+    };
+
+    const removeFav = (): number[] => {
+      return userStore.favourites.filter(
+        (favId: number) => favId !== recipe.Id,
+      );
+    };
+
+    const updateFav = (newFavList: number[]) => {
+      const initUserData = {
+        Favourites: newFavList,
+      };
+      const reference = firebase.app().database(DBURL);
+      reference.ref(`/users/${userStore.uid}`).set(initUserData);
+      userStore.setFavourites(newFavList);
+    };
+
+    return (
+      <>
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={recipe.Name} />
           <Appbar.Action
-            icon={true ? 'heart-outline' : 'heart'}
-            onPress={() => console.log('love')}
+            icon={isFav ? 'heart' : 'heart-outline'}
+            onPress={favToggle}
           />
         </Appbar.Header>
 
@@ -56,6 +82,7 @@ export const ViewRecipeScreen = ({
                   orderedList={true}
                   listArray={recipe.Method}></DisplayListWithTitle>
               </View>
+              <Text>{userStore.favourites}</Text>
             </>
           ) : (
             <>
@@ -64,17 +91,17 @@ export const ViewRecipeScreen = ({
             </>
           )}
         </ScrollView>
-      </BaseScreen>
-      {hasRecipe && (
-        <FAB
-          icon="pencil"
-          style={styles.fab}
-          onPress={() => console.log('Pressed')}
-        />
-      )}
-    </>
-  );
-};
+        {hasRecipe && (
+          <FAB
+            icon="pencil"
+            style={styles.fab}
+            onPress={() => console.log('Pressed')}
+          />
+        )}
+      </>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   main: {

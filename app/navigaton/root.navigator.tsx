@@ -5,14 +5,19 @@ import {NavigationContainer} from '@react-navigation/native';
 import LoginNavigator from './login.navigator';
 import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
+import {useStores} from '../store/mainStore';
 
 const Stack = createStackNavigator();
 
 export const RootNavigator = () => {
+  const userStore = useStores();
   const [user, setUser] = useState(null);
   // Handle user state changes
   function onAuthStateChanged(user: any) {
-    console.log('------- USE RCHANGED ', user);
+    console.log('------- USER CHANGED ', user);
+    if (user) {
+      userStore.setUserInfo(user.displayName, user.uid);
+    }
     setUser(user);
   }
 

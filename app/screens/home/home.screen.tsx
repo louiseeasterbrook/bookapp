@@ -1,17 +1,12 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Text, Searchbar} from 'react-native-paper';
-import {Recipe} from '../../models/searchResults';
+import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
-import {BaseScreen} from '../../components/BaseScreen.component';
 
 import {firebase} from '@react-native-firebase/database';
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
 import {useStores} from '../../store/mainStore';
-
+import {BaseScreen} from '../../components/BaseScreen.component';
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
@@ -20,7 +15,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const hello = useStores();
+  const userStore = useStores();
 
   const DBURL =
     'https://recipes-18c3d-default-rtdb.asia-southeast1.firebasedatabase.app';
@@ -32,9 +27,9 @@ export const HomeScreen = ({navigation}): ReactNode => {
     reference
       .ref('recipes')
       .once('value')
-      .then(Response => {
-        setRecipeList(Response.val());
-        setFilteredRecipeList(Response.val());
+      .then(response => {
+        setRecipeList(response.val());
+        setFilteredRecipeList(response.val());
         setLoading(false);
       });
   };
@@ -52,11 +47,42 @@ export const HomeScreen = ({navigation}): ReactNode => {
       });
   };
 
-  useEffect(() => {
-    // console.log('see ', hello);
-    // hello.setMainColor('blue ');
-    // console.log('======== after', hello?.mainColor);
+  const getUsers = (): void => {
+    if (!userStore.uid) {
+      return;
+    }
+    const reference = firebase.app().database(DBURL);
 
+    reference
+      .ref(`users/${userStore.uid}`)
+      .once('value')
+      .then(response => {
+        console.log(`users/${userStore.uid}`, response);
+        processUserResult(response.val());
+      });
+  };
+
+  const processUserResult = (response: RecipeUser) => {
+    if (!response) {
+      addNewUser();
+      return;
+    }
+    userStore.setFavourites(response.Favourites);
+  };
+
+  const addNewUser = () => {
+    const currentDate = new Date();
+
+    const initUserData: RecipeUser = {
+      DateCreated: currentDate.toString(),
+      Favourites: [],
+    };
+    const reference = firebase.app().database(DBURL);
+    reference.ref(`/users/${userStore.uid}`).set(initUserData);
+  };
+
+  useEffect(() => {
+    getUsers();
     getRecipes();
     getCategories();
   }, []);
